@@ -87,6 +87,7 @@ def syncfunc():
 
 schedule.every().day.at("13:33").do(syncfunc)
 
+# while True is necessary for keeping schedule module running in the background. e.g. every 10 mins we run our code.
 while True:
     schedule.run_pending()
     time.sleep(1)
