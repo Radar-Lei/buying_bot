@@ -71,10 +71,11 @@ async def main():
     t_out = 1500
     # maximum time for page.goto. timeout for refresh the page
     t_out_page = 3000
-    browser = await launch(headless=False, userDataDir='./userdata', args=['--disable-infobars'])
+    # '--no sandbox' for running the code in ubuntu, '--disable-infobars' for avoiding webdriver detection
+    browser = await launch(headless=False, userDataDir='./userdata', args=['--disable-infobars', '--no-sandbox'])
     page = await browser.newPage()
     # change user profile, default 0. 1 means that you want to change login info.
-    change_or_not = 0
+    change_or_not = 1
     if change_or_not == 1:
         # stay in the current page. unit: s
         await asyncio.sleep(10000)
@@ -84,7 +85,7 @@ async def main():
 def syncfunc():
     asyncio.get_event_loop().run_until_complete(main())
 
-schedule.every().day.at("10:44").do(syncfunc)
+schedule.every().day.at("13:33").do(syncfunc)
 
 while True:
     schedule.run_pending()
