@@ -75,7 +75,7 @@ async def main():
     browser = await launch(headless=False, userDataDir='./userdata', args=['--disable-infobars', '--no-sandbox'])
     page = await browser.newPage()
     # change user profile, default 0. 1 means that you want to change login info.
-    change_or_not = 1
+    change_or_not = 0
     if change_or_not == 1:
         # stay in the current page. unit: s
         await asyncio.sleep(10000)
