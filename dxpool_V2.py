@@ -50,7 +50,6 @@ async def loop_shooter(page,product_url,item_num,t_out,t_out_page):
         approval = await page.waitForSelector('input[id="conditions_to_approve[terms-and-conditions]"]',timeout=t_out)
         await page.evaluate('(element_2) => element_2.click()', approval)
 
-
         final_confirm = await page.waitForSelector('button[class="btn btn-primary center-block"]', timeout=t_out)
         await page.evaluate('(element_2) => element_2.click()', final_confirm)
 
@@ -65,12 +64,12 @@ async def main():
     """
 
     """
-    item_num = 1
-    product_url = 'https://www.dxpool.io/index.php?id_product=62&rewrite=mini-doge&controller=product'
+    item_num = 2
+    product_url = 'https://www.dxpool.io/index.php?id_product=63&rewrite=lb1&controller=product'
     # maximum time for waitForSelector, throw error when reaching timeout. unit: ms.
-    t_out = 1500
+    t_out = 1200
     # maximum time for page.goto. timeout for refresh the page
-    t_out_page = 3000
+    t_out_page = 2000
     # '--no sandbox' for running the code in ubuntu, '--disable-infobars' for avoiding webdriver detection
     browser = await launch(headless=False, userDataDir='./userdata', args=['--disable-infobars', '--no-sandbox'])
     page = await browser.newPage()
@@ -85,9 +84,8 @@ async def main():
 def syncfunc():
     asyncio.get_event_loop().run_until_complete(main())
 
-schedule.every().day.at("13:33").do(syncfunc)
+schedule.every().day.at("09:59:58").do(syncfunc)
 
-# while True is necessary for keeping schedule module running in the background. e.g. every 10 mins we run our code.
 while True:
     schedule.run_pending()
     time.sleep(1)
