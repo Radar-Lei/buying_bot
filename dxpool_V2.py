@@ -54,7 +54,6 @@ async def loop_shooter(browser, page, product_url, item_num, t_out, t_out_page, 
         approval = await page.waitForSelector('input[id="conditions_to_approve[terms-and-conditions]"]', timeout=t_out)
         await page.evaluate('(element_2) => element_2.click()', approval)
 
-        await asyncio.sleep(10000)
         final_confirm = await page.waitForSelector('button[class="btn btn-primary center-block"]', timeout=t_out)
         await page.evaluate('(element_2) => element_2.click()', final_confirm)
 
@@ -77,9 +76,9 @@ async def main(change_or_not,item_num,product_url,t_sleep_min,t_sleep_max,attemp
     """
 
     # maximum time for waitForSelector, throw error when reaching timeout. unit: ms.
-    t_out = 800
-    # maximum time for page.goto. timeout for refresh the page
-    t_out_page = 1000
+    t_out = 2000
+    # maximum time for page.goto. timeout for refresh the page, cannot be too small
+    t_out_page = 2500
 
     # '--no sandbox' for running the code in ubuntu, '--disable-infobars' for avoiding webdriver detection
     browser = await launch(headless=False, userDataDir='./userdata', args=['--disable-infobars', '--no-sandbox'])
@@ -99,10 +98,10 @@ product_url = 'https://www.dxpool.io/index.php?id_product=60&rewrite=ck-box&cont
 t_sleep_min = 1
 t_sleep_max = 1
 
-attempt = 0
+attempt = 1
 max_attempts = 360 # important !!!!!!
 
-change_or_not = 0
+change_or_not = 0  #!!!!
 if change_or_not == 1:
     asyncio.get_event_loop().run_until_complete(main(change_or_not,item_num,product_url,t_sleep_min,t_sleep_max,attempt,max_attempts))
 
